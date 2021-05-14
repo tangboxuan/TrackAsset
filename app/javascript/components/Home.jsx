@@ -11,7 +11,7 @@ export default () => (
         </p>
         <hr className="my-4" />
         <Link
-          to="/landing"
+          to="/assets"
           className="btn btn-lg custom-button"
           role="button"
         >

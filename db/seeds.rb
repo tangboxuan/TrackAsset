@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+9.times do |i|
+    Asset.create(
+      listed: true,
+      market: "SGX",
+      ticker: "D0#{i+1}",
+      currency: "SGD",
+      volume: 100,
+      cost: i+1,
+      price: 10
+    )
+  end
