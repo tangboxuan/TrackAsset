@@ -13,6 +13,14 @@ class Api::V1::AssetsController < ApplicationController
     end
   end
 
+  def update
+    if asset.update(asset_params)
+      render json: asset
+    else
+      render json: asset.errors
+    end
+  end
+
   def destroy
     asset&.destroy
     render json: { message: 'Asset deleted!' }

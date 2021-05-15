@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       post 'assets/create'
       # get 'assets/show'
       delete 'assets/destroy/:id', to: 'assets#destroy'
-      put 'assets/edit/:id', to: 'assets#edit'
+      put 'assets/update/:id', to: 'assets#update'
     end
   end
   root 'homepage#index'
