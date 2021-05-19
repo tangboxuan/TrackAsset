@@ -34,5 +34,9 @@ module TrackAsset
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # User Authentication
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end
