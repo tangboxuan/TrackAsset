@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios'
 import Port from "../routes/Port";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from "../components/Home";
 import Assets from "../components/Assets";
 import AddAsset from "../components/AddAsset";
@@ -13,9 +13,10 @@ class App extends React.Component {
         super(props);
         this.state = { 
             isLoggedIn: false,
-            user: {}
+            user: {},
         };
     };
+
 
     componentDidMount() {
         this.loginStatus()
@@ -55,7 +56,6 @@ class App extends React.Component {
         .then(response => {
             if (response.data.logged_out) {
                 this.handleLogout()
-                this.history.push('/')
             }
         })
 
@@ -65,14 +65,16 @@ class App extends React.Component {
     render() {
         return (
             <div>
-            <h1>{this.state.isLoggedIn?<button onClick={this.clickLogout}>Log Out</button>:<>Not Logged In</>}</h1>
+            <h1>{this.state.isLoggedIn?<button onClick={this.clickLogout}>Log Out</button>:<>Not Logged In. Use username "test" and password "test".</>}</h1>
             <Router>
                 <Switch>
-                    <Route path="/" exact component={this.state.isLoggedIn?Assets:Home} />
-                    {/* <Route path="/assets" exact component={Assets} /> */}
-                    <Route path="/addasset" exact component={AddAsset} />
-                    <Route path='/login' exact render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}/>
-                    <Route path='/signup' exact render={(props) => <Signup {...props} handleLogin={this.handleLogin}/>}/>
+                    <Route path="/" exact>{this.state.isLoggedIn?<Redirect to="/assets"/>:<Home/>}</Route> 
+                    <Route path="/assets" exact>{this.state.isLoggedIn?<Assets/>:<Redirect to="/"/>}</Route>
+                    <Route path="/addasset" exact>{this.state.isLoggedIn?<AddAsset/>:<Redirect to="/"/>}</Route>
+                    <Route path="/login" exact>{this.state.isLoggedIn?<Redirect to="/assets"/>:<Login handleLogin={this.handleLogin}/>}</Route> 
+                    {/* <Route path='/login' exact render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}/> */}
+                    <Route path="/signup" exact>{this.state.isLoggedIn?<Redirect to="/assets"/>:<Signup handleLogin={this.handleLogin}/>}</Route> 
+                    {/* <Route path='/signup' exact render={(props) => <Signup {...props} handleLogin={this.handleLogin}/>}/> */}
                 </Switch>
             </Router>
             </div>

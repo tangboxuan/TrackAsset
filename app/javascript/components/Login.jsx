@@ -73,9 +73,24 @@ class Login extends React.Component {
                     />         
                     <button placeholder="submit" type="submit">
                         Log In
-                    </button>          
+                    </button>
+                    
                     <div>
-                        or <Link to='/signup'>sign up</Link>
+                    <br/>    
+                    <Link
+                    to="/"
+                    className="btn btn-lg custom-button"
+                    role="button"
+                    >
+                    Home
+                    </Link> &ensp;
+                    <Link
+                    to="/signup"
+                    className="btn btn-lg custom-button"
+                    role="button"
+                    >
+                    Sign Up
+                    </Link>
                     </div>
                 </form>
             </div>

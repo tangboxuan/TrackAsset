@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Port from "../routes/Port";
+import { Link } from "react-router-dom";
 
 class Signup extends React.Component {
     constructor(props) {
@@ -91,6 +92,14 @@ class Signup extends React.Component {
                     Sign Up
                     </button>
                 </form>
+                <br/>
+                <Link
+                to="/"
+                className="btn btn-lg custom-button"
+                role="button"
+                >  
+                    Home
+                </Link>
             </div>
         );
     }

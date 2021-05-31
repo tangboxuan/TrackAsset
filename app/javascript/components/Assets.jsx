@@ -241,9 +241,6 @@ class Assets extends React.Component {
                 </tbody>
               </table>
             </form>
-            <Link to="/" className="btn btn-link">
-              Home
-            </Link>
           </main>
         </div>
       </>
