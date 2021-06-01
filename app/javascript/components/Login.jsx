@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios'
-import {Link} from 'react-router-dom'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import History from "../routes/History";
 import Port from "../routes/Port";
 
 class Login extends React.Component {
@@ -44,7 +45,7 @@ class Login extends React.Component {
     };
 
     redirect = () => {
-        this.props.history.push('/')
+        History.push('/')
     }
 
     render() {
@@ -60,7 +61,7 @@ class Login extends React.Component {
                         type="text"
                         name="username"
                         value={username}
-                        // required
+                        required
                         onChange={this.handleChange}
                     />
                     <input
@@ -68,7 +69,7 @@ class Login extends React.Component {
                         type="password"
                         name="password"
                         value={password}
-                        // required
+                        required
                         onChange={this.handleChange}
                     />         
                     <button placeholder="submit" type="submit">

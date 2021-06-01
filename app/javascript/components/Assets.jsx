@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import History from "../routes/History";
 
 class Assets extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Assets extends React.Component {
         throw new Error("Network response was not ok.");
     })
     .then(response => this.setState({ assets: response }))
-    .catch(() => this.props.history.push("/"));
+    .catch(() => History.push("/"));
   }
 
   editingAsset(asset) {

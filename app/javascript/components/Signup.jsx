@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Port from "../routes/Port";
 import { Link } from "react-router-dom";
+import History from "../routes/History"
 
 class Signup extends React.Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class Signup extends React.Component {
     };
 
     redirect = () => {
-        this.props.history.push('/')
+        History.push('/')
     }
 
     handleErrors = () => {
@@ -72,6 +73,7 @@ class Signup extends React.Component {
                     type="text"
                     name="username"
                     value={username}
+                    required
                     onChange={this.handleChange}
                     />
                     <input 
@@ -86,6 +88,7 @@ class Signup extends React.Component {
                     type="password"
                     name="password_confirmation"
                     value={password_confirmation}
+                    required
                     onChange={this.handleChange}
                     />
                     <button placeholder="submit" type="submit">

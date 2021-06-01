@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import History from "../routes/History";
 
 class AddAsset extends React.Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class AddAsset extends React.Component {
         throw new Error("Network response was not ok.");
         })
 
-        .then(this.props.history.push(`/assets`))
+        .then(History.push(`/assets`))
 
         .catch(error => console.log(error.message));
     }
