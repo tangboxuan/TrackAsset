@@ -13,6 +13,7 @@
       currency: "SGD",
       volume: 100,
       cost: i+1,
-      price: 10
+      price: 10,
+      user_id: 1
     )
   end

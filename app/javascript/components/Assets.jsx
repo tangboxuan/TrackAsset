@@ -8,13 +8,11 @@ class Assets extends React.Component {
     this.state = {
       assets: [],
       editing: 0,
-      listed: true,
       market: "",
       ticker: "",
       currency: "",
       volume: 0.0,
       cost: -0.1,
-      price: 0.0
     };
 
     this.onChange = this.onChange.bind(this);
@@ -22,7 +20,7 @@ class Assets extends React.Component {
   }
 
   componentDidMount() {
-    const url = "/api/v1/assets/index";
+    const url = `/api/v1/assets/index/${this.props.id}`;
     fetch(url)
     .then(response => {
         if (response.ok) {
@@ -37,13 +35,11 @@ class Assets extends React.Component {
   editingAsset(asset) {
     this.setState({
       editing: asset.id,
-      listed: asset.listed,
       market: asset.market,
       ticker: asset.ticker,
       currency: asset.currency,
       volume: asset.volume,
       cost: asset.cost,
-      price: asset.price
     })
   }
 
@@ -52,13 +48,11 @@ class Assets extends React.Component {
     const { 
         assets,
         editing,
-        listed,
         market,
         ticker,
         currency,
         volume,
         cost,
-        price
     } = this.state;
     const url = `/api/v1/assets/update/${editing}`;
 
@@ -70,13 +64,11 @@ class Assets extends React.Component {
     ) return;
 
     const body = {
-        listed,
         market,
         ticker,
         currency,
         volume,
         cost,
-        price
     };
 
     const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -152,8 +144,8 @@ class Assets extends React.Component {
         <tr key={asset.id}>
           <td><input
               type="text"
-              name="exchange"
-              id="assetExchange"
+              name="market"
+              id="assetMarket"
               defaultValue={asset.market}
               required
               onChange={this.onChange}

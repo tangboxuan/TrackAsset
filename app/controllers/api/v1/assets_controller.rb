@@ -1,6 +1,8 @@
 class Api::V1::AssetsController < ApplicationController
+  before_action :require_login
+
   def index
-    asset = Asset.all.order(created_at: :desc)
+    asset = Asset.where("user_id = '"+params[:user_id]+"'").order(created_at: :desc)
     render json: asset
   end
 
@@ -28,8 +30,14 @@ class Api::V1::AssetsController < ApplicationController
 
   private
 
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access this section"
+    end
+  end
+
   def asset_params
-    params.permit(:listed, :market, :ticker, :currency, :volume, :cost, :price)
+    params.permit(:listed, :market, :ticker, :currency, :volume, :cost, :price, :user_id)
   end
 
   def asset

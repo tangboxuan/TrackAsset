@@ -30,7 +30,9 @@ class Signup extends React.Component {
             password: password,
             password_confirmation: password_confirmation
         }
-
+        const token = document.querySelector('meta[name="csrf-token"]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+        
         axios.post(`${Port}/users`, {user}, {withCredentials: true})
 
         .then(response => {

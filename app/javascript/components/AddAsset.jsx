@@ -36,12 +36,14 @@ class AddAsset extends React.Component {
             cost,
             price
         } = this.state;
+        const user_id = this.props.id;
 
         if (
             ticker.length == 0 
             || currency.length == 0 
             || volume <= 0 
             || cost < 0 
+            || user_id == 0
         ) return;
 
         const body = {
@@ -51,7 +53,8 @@ class AddAsset extends React.Component {
             currency,
             volume,
             cost,
-            price
+            price,
+            user_id
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -94,8 +97,8 @@ class AddAsset extends React.Component {
                     <label htmlFor="assetExchange">Stock Exchange</label>
                     <input
                       type="text"
-                      name="exchange"
-                      id="assetExchange"
+                      name="market"
+                      id="assetMarket"
                       className="form-control"
                       required
                       onChange={this.onChange}

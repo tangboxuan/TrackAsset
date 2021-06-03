@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      get 'assets/index'
+      get 'assets/index/:user_id', to: 'assets#index'
       post 'assets/create'
       delete 'assets/destroy/:id', to: 'assets#destroy'
       put 'assets/update/:id', to: 'assets#update'

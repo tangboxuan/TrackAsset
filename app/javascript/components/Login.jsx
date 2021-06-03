@@ -28,7 +28,9 @@ class Login extends React.Component {
           username: username,
           password: password
         }
-        
+        const token = document.querySelector('meta[name="csrf-token"]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+
         axios.post(`${Port}/login`, {user}, {withCredentials: true})
 
         .then(response => {

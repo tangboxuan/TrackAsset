@@ -4,4 +4,6 @@ class Asset < ApplicationRecord
     validates :currency, presence: true
     validates :volume, presence: true
     validates :cost, presence: true
+
+    belongs_to :user
 end
