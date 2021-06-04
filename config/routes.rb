@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'assets/create'
       delete 'assets/destroy/:id', to: 'assets#destroy'
       put 'assets/update/:id', to: 'assets#update'
+      get 'assets/refresh/:user_id', to: 'assets#refresh'
 
       post '/login',    to: 'sessions#create'
       post '/logout',   to: 'sessions#destroy'

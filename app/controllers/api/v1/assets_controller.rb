@@ -2,7 +2,7 @@ class Api::V1::AssetsController < ApplicationController
   before_action :require_login
 
   def index
-    asset = Asset.where("user_id = '"+params[:user_id]+"'").order(created_at: :desc)
+    asset = Asset.where(user_id: params[:user_id]).order(created_at: :desc)
     render json: asset
   end
 
@@ -28,11 +28,21 @@ class Api::V1::AssetsController < ApplicationController
     render json: { message: 'Asset deleted!' }
   end
 
+  def refresh
+    @asset = Asset.where(user_id: params[:user_id]).each do |asset|
+      # asset.market
+      # asset.ticker
+      # asset.currency
+      asset.update(price: asset.price + 1)
+    end
+    render json: { mesage: 'Attempted to refresh!' }
+  end
+
   private
 
   def require_login
-    unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
+    if current_user.nil?
+      redirect_to :root
     end
   end
 

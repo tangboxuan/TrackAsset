@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import History from "../routes/History";
+import Port from "../routes/Port";
 
 class Assets extends React.Component {
   constructor(props) {
@@ -13,14 +14,16 @@ class Assets extends React.Component {
       currency: "",
       volume: 0.0,
       cost: -0.1,
+      price: -0.1,
     };
 
     this.onChange = this.onChange.bind(this);
     this.editAsset = this.editAsset.bind(this);
+    this.refreshPrices = this.refreshPrices.bind(this);
   }
 
   componentDidMount() {
-    const url = `/api/v1/assets/index/${this.props.id}`;
+    const url = `${Port}/assets/index/${this.props.id}`;
     fetch(url)
     .then(response => {
         if (response.ok) {
@@ -40,6 +43,7 @@ class Assets extends React.Component {
       currency: asset.currency,
       volume: asset.volume,
       cost: asset.cost,
+      price: asset.price,
     })
   }
 
@@ -53,14 +57,16 @@ class Assets extends React.Component {
         currency,
         volume,
         cost,
+        price,
     } = this.state;
-    const url = `/api/v1/assets/update/${editing}`;
+    const url = `${Port}/assets/update/${editing}`;
 
     if (
         ticker.length == 0 
         || currency.length == 0 
         || volume <= 0 
         || cost < 0 
+        || price < 0
     ) return;
 
     const body = {
@@ -69,6 +75,7 @@ class Assets extends React.Component {
         currency,
         volume,
         cost,
+        price
     };
 
     const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -100,7 +107,7 @@ class Assets extends React.Component {
 
   deleteAsset(name, id) {
     if (confirm(`Are you sure you want to delete ${name}?`)) {
-      const url = `/api/v1/assets/destroy/${id}`;
+      const url = `${Port}/assets/destroy/${id}`;
       const token = document.querySelector('meta[name="csrf-token"]').content;
 
       fetch(url, {
@@ -118,12 +125,36 @@ class Assets extends React.Component {
         throw new Error("Network response was not ok.");
       })
 
-      this.setState((prevState) => ({
+      .then(this.setState((prevState) => ({
         assets: prevState.assets.filter((asset) => asset.id !== id)
-      }))
+      })))
 
       .catch(error => console.log(error.message));
     }
+  }
+
+  refreshPrices() {
+    const url = `${Port}/assets/refresh/${this.props.id}`;
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-CSRF-Token": token,
+        "Content-Type": "application/json"
+      }
+    })
+
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Network response was not ok.");
+    })
+
+    .then(() => location.reload())
+
+    .catch(error => console.log(error.message));
   }
 
   render() {
@@ -142,8 +173,12 @@ class Assets extends React.Component {
     const allAssets = assets.map((asset, index) => (
       asset.id == editing ? 
         <tr key={asset.id}>
+          <td>
+            {asset.listed?"Yes":"No"}
+          </td>
           <td><input
               type="text"
+              size="4"
               name="market"
               id="assetMarket"
               defaultValue={asset.market}
@@ -152,6 +187,7 @@ class Assets extends React.Component {
           /></td>
           <td><input
               type="text"
+              size="4"
               name="ticker"
               id="assetTicker"
               defaultValue={asset.ticker}
@@ -160,6 +196,7 @@ class Assets extends React.Component {
           /></td>
           <td><input
               type="text"
+              size="4"
               name="currency"
               id="assetCurrency"
               defaultValue={asset.currency}
@@ -182,7 +219,18 @@ class Assets extends React.Component {
               required
               onChange={this.onChange}
           /></td>
+          <td><input
+              type="number"
+              name="price"
+              id="assetPrice"
+              defaultValue={asset.price}
+              required
+              onChange={this.onChange}
+          /></td>
           <td>
+            {asset.updated_at}
+          </td>
+          <td colSpan="2">
               <button type="submit">
               Confirm Edit
               </button>
@@ -190,11 +238,14 @@ class Assets extends React.Component {
           </tr>
       :
         <tr key={asset.id}>
+            <td>{asset.listed?"Yes":"No"}</td>
             <td>{asset.market}</td>
             <td>{asset.ticker}</td>
             <td>{asset.currency}</td>
             <td>{asset.volume}</td>
             <td>{asset.cost}</td>
+            <td>{asset.price}</td>
+            <td>{asset.updated_at}</td>
             <td><button onClick={() => this.deleteAsset(asset.ticker, asset.id)}>Delete</button></td>
             <td><button onClick={() => this.editingAsset(asset)}>Edit</button></td>
         </tr>
@@ -213,20 +264,27 @@ class Assets extends React.Component {
         <div className="py-5">
           <main className="container">
             <div className="text-right mb-3">
-              <Link to="/addasset" className="btn custom-button">
+              <Link to="/addasset" className="btn custom-button mt-3">
                 Add New Asset
-              </Link>
+              </Link> 
+              &ensp;
+              <button onClick={this.refreshPrices} className="btn custom-button mt-3">
+                Refresh Prices
+              </button>
             </div>
             <form onSubmit={this.editAsset}>
               <table>
                 <thead>
                   <tr>
+                      <th>Listed</th>
                       <th>Market</th>
                       <th>Ticker</th>
                       <th>Currency</th>
                       <th>Volume</th>
                       <th>Cost</th>
-                      <th>Actions</th>
+                      <th>Price</th>
+                      <th>Updated</th>
+                      <th colSpan="2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>

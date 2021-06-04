@@ -17,7 +17,6 @@ class AddAsset extends React.Component {
   
       this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
-      this.stripHtmlEntities = this.stripHtmlEntities.bind(this);
     }
 
     onChange(event) {
@@ -78,10 +77,6 @@ class AddAsset extends React.Component {
         .then(History.push(`/assets`))
 
         .catch(error => console.log(error.message));
-    }
-
-    stripHtmlEntities(str) {
-        return String(str).replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     render() {
