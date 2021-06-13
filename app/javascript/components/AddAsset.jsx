@@ -45,7 +45,7 @@ class AddAsset extends React.Component {
             || user_id == 0
         ) return;
 
-        const body = {
+        const asset = {
             listed,
             market,
             ticker,
@@ -64,7 +64,7 @@ class AddAsset extends React.Component {
             "X-CSRF-Token": token,
             "Content-Type": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(asset)
         })
 
         .then(response => {

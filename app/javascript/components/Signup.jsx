@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Port from "../routes/Port";
 import { Link } from "react-router-dom";
 import History from "../routes/History"
@@ -26,22 +25,34 @@ class Signup extends React.Component {
         event.preventDefault()
         const {username, password, password_confirmation} = this.state
         let user = {
-            username: username,
-            password: password,
-            password_confirmation: password_confirmation
+            username,
+            password,
+            password_confirmation
         }
         const token = document.querySelector('meta[name="csrf-token"]').content
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = token
-        
-        axios.post(`${Port}/users`, {user}, {withCredentials: true})
+        const url = `${Port}/users`
 
+        fetch(url, {
+            method: "POST",
+            headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
         .then(response => {
-            if (response.data.status === 'created') {
-                this.props.handleLogin(response.data)
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+        })
+        .then(data => {
+            if (data.status === 'created') {
+                this.props.handleLogin(data)
                 this.redirect()
             } else {
                 this.setState({
-                errors: response.data.errors
+                errors: data.errors
                 })
             }
         })

@@ -69,7 +69,7 @@ class Assets extends React.Component {
         || price < 0
     ) return;
 
-    const body = {
+    const asset = {
         market,
         ticker,
         currency,
@@ -86,7 +86,7 @@ class Assets extends React.Component {
           "X-CSRF-Token": token,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(asset)
     })
 
     .then(response => {

@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios'
 import Port from "../routes/Port";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import History from "../routes/History"
@@ -25,12 +24,24 @@ class App extends React.Component {
 
     loginStatus = () => {
         const token = document.querySelector('meta[name="csrf-token"]').content
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = token
-        axios.get(`${Port}/logged_in`, {withCredentials: true})    
 
+        const url = `${Port}/logged_in`
+        fetch(url, {
+            method: "GET",
+            headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+            },
+        })
         .then(response => {
-            if (response.data.logged_in) {
-                this.handleLogin(response.data)
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+          })
+        .then(data => {
+            if (data.logged_in) {
+                this.handleLogin(data)
             } else {
                 this.handleLogout()
             }
@@ -54,11 +65,22 @@ class App extends React.Component {
     
     clickLogout = () => {
         const token = document.querySelector('meta[name="csrf-token"]').content
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = token
-        axios.post(`${Port}/logout`, {withCredentials: true})
-
+        const url = `${Port}/logout`
+        fetch(url, {
+            method: "POST",
+            headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+            },
+        })
         .then(response => {
-            if (response.data.logged_out) {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+        })
+        .then(data => {
+            if (data.logged_out) {
                 this.handleLogout()
                 History.push("/")
             }
