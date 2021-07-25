@@ -2,7 +2,7 @@ import React from 'react';
 import Port from "../routes/Port";
 import { Link } from "react-router-dom";
 import History from "../routes/History"
-import Button from 'react-bootstrap/Button'
+import {Button} from 'react-bootstrap'
 
 class Signup extends React.Component {
     constructor(props) {

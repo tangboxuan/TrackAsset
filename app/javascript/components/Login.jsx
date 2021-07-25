@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import History from "../routes/History";
-import Button from 'react-bootstrap/Button'
-import Alert from 'react-bootstrap/Alert'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Button, Row, Col} from 'react-bootstrap'
 import Port from "../routes/Port";
 
 class Login extends React.Component {

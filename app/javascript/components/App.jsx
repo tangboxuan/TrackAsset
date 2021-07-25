@@ -7,10 +7,7 @@ import Assets from "../components/Assets";
 import AddAsset from "../components/AddAsset";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
+import {Container, Alert, Button} from 'react-bootstrap'
 
 class App extends React.Component {
     constructor(props) {
@@ -98,9 +95,14 @@ class App extends React.Component {
         return (
             <div>
             <Container>
-            <Alert variant='warning' style={{marginTop: "20px"}}>
-                {this.state.isLoggedIn ? <><button onClick={this.clickLogout}>Log Out</button> Username: {username}</> : <>Not Logged In. Use username "test" and password "test".</>}
-            </Alert>
+            {this.state.isLoggedIn 
+                ? <Alert variant='warning' style={{marginTop: "20px"}}>
+                    <div class="d-flex justify-content-between">
+                        <div>Account: {username}</div>
+                        <div><Button variant='primary' onClick={this.clickLogout}>Log Out</Button></div>
+                    </div>
+                </Alert>
+                :<></>}
             </Container>
             <Router history={History}>
                 <Switch>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import History from "../routes/History";
 import Port from "../routes/Port";
+import {Button} from 'react-bootstrap';
 
 class Assets extends React.Component {
   constructor(props) {
@@ -246,8 +247,8 @@ class Assets extends React.Component {
             <td>{asset.cost}</td>
             <td>{asset.price}</td>
             <td>{asset.updated_at}</td>
-            <td><button onClick={() => this.deleteAsset(asset.ticker, asset.id)}>Delete</button></td>
-            <td><button onClick={() => this.editingAsset(asset)}>Edit</button></td>
+            <td><Button variant='secondary' onClick={() => this.editingAsset(asset)}>Edit</Button></td>
+            <td><Button variant='danger' onClick={() => this.deleteAsset(asset.ticker, asset.id)}>Delete</Button></td>
         </tr>
     ));
 
@@ -256,9 +257,6 @@ class Assets extends React.Component {
         <section className="jumbotron jumbotron-fluid text-center">
           <div className="container py-5">
             <h1 className="display-4">All assets</h1>
-            <p className="lead text-muted">
-              Filler lead text-muted
-            </p>
           </div>
         </section>
         <div className="py-5">
@@ -273,18 +271,18 @@ class Assets extends React.Component {
               </button>
             </div>
             <form onSubmit={this.editAsset}>
-              <table>
+              <table class='table table-striped'>
                 <thead>
                   <tr>
-                      <th>Listed</th>
-                      <th>Market</th>
-                      <th>Ticker</th>
-                      <th>Currency</th>
-                      <th>Volume</th>
-                      <th>Cost</th>
-                      <th>Price</th>
-                      <th>Updated</th>
-                      <th colSpan="2">Actions</th>
+                      <th scope='col'>Listed</th>
+                      <th scope='col'>Market</th>
+                      <th scope='col'>Ticker</th>
+                      <th scope='col'>Currency</th>
+                      <th scope='col'>Volume</th>
+                      <th scope='col'>Cost</th>
+                      <th scope='col'>Price</th>
+                      <th scope='col'>Updated</th>
+                      <th scope='col' colSpan="2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
