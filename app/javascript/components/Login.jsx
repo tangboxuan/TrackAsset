@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import History from "../routes/History";
+import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Port from "../routes/Port";
 
 class Login extends React.Component {
@@ -65,37 +70,35 @@ class Login extends React.Component {
         const {username, password, errors} = this.state;
 
         return (
-            <div>
-                <h1>Log In</h1>
-                {errors}
+            <div class="container">
+                <div class="row"><Col><div class="d-flex justify-content-center">
+                        <h1>Log In</h1>
+                    </div></Col></div>
+                
+                <Row><Col>{errors}</Col></Row>
+                
+                <Row><Col>
                 <form onSubmit={this.handleSubmit}>
-                    <input
-                        placeholder="username"
-                        type="text"
-                        name="username"
-                        value={username}
-                        required
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        placeholder="password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        required
-                        onChange={this.handleChange}
-                    />         
-                    <button placeholder="submit" type="submit">
+                    <div class="form-group" style={{marginTop: "20px"}}>
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" value={username} placeholder="Username" onChange={this.handleChange} required />
+                    </div>
+                    <div class="form-group" style={{marginTop: "20px"}}>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" value={password} placeholder="Password" onChange={this.handleChange} required />
+                    </div>
+                    <div></div>
+                    <Button variant="primary" type="submit" style={{marginTop: "20px"}}>
                         Log In
-                    </button>
+                    </Button>
                     
                     <div>
                     <br/>    
+                    <div class="d-flex justify-content-center">
                     <Link
                     to="/"
                     className="btn btn-lg custom-button"
-                    role="button"
-                    >
+                    role="button">
                     Home
                     </Link> &ensp;
                     <Link
@@ -106,7 +109,9 @@ class Login extends React.Component {
                     Sign Up
                     </Link>
                     </div>
+                    </div>
                 </form>
+                </Col></Row>
             </div>
         );
     }

@@ -7,6 +7,10 @@ import Assets from "../components/Assets";
 import AddAsset from "../components/AddAsset";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 
 class App extends React.Component {
     constructor(props) {
@@ -93,7 +97,11 @@ class App extends React.Component {
         const {id, username,} = this.state.isLoggedIn ? this.state.user : {id:0, username:""};
         return (
             <div>
-            <h1>{this.state.isLoggedIn ? <><button onClick={this.clickLogout}>Log Out</button> Username: {username}</> : <>Not Logged In. Use username "test" and password "test".</>}</h1>
+            <Container>
+            <Alert variant='warning' style={{marginTop: "20px"}}>
+                {this.state.isLoggedIn ? <><button onClick={this.clickLogout}>Log Out</button> Username: {username}</> : <>Not Logged In. Use username "test" and password "test".</>}
+            </Alert>
+            </Container>
             <Router history={History}>
                 <Switch>
                     <Route path="/" exact>{this.state.isLoggedIn ? <Redirect to="/assets"/> : <Home/>}</Route> 

@@ -2,6 +2,7 @@ import React from 'react';
 import Port from "../routes/Port";
 import { Link } from "react-router-dom";
 import History from "../routes/History"
+import Button from 'react-bootstrap/Button'
 
 class Signup extends React.Component {
     constructor(props) {
@@ -79,36 +80,30 @@ class Signup extends React.Component {
         const {username, password, password_confirmation} = this.state
         return (
             <div>
+                <div class="d-flex justify-content-center">
                 <h1>Sign Up</h1>        
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                    placeholder="username"
-                    type="text"
-                    name="username"
-                    value={username}
-                    required
-                    onChange={this.handleChange}
-                    />
-                    <input 
-                    placeholder="password"
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={this.handleChange}
-                    />          
-                    <input
-                    placeholder="password confirmation"
-                    type="password"
-                    name="password_confirmation"
-                    value={password_confirmation}
-                    required
-                    onChange={this.handleChange}
-                    />
-                    <button placeholder="submit" type="submit">
-                    Sign Up
-                    </button>
+                </div>
+                
+                <form onSubmit={this.handleSubmit} style={{padding: "40px"}}>
+                <div class="form-group" style={{marginTop: "20px"}}>
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" value={username} placeholder="Username" onChange={this.handleChange} required />
+                </div>
+                <div class="form-group" style={{marginTop: "20px"}}>
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" value={password} placeholder="Password" onChange={this.handleChange} required />
+                </div>
+                <div class="form-group" style={{marginTop: "20px"}}>
+                    <label for="password">Confirm Password</label>
+                    <input type="password" class="form-control" name="password_confirmation" value={password_confirmation} placeholder="Password" onChange={this.handleChange} required />
+                </div>
+                    <Button variant="primary" type="submit" style={{marginTop: "20px"}}>
+                        Sign up
+                    </Button>
                 </form>
+                
                 <br/>
+                <div class="d-flex justify-content-center">
                 <Link
                 to="/"
                 className="btn btn-lg custom-button"
@@ -116,6 +111,7 @@ class Signup extends React.Component {
                 >  
                     Home
                 </Link>
+                </div>
             </div>
         );
     }
