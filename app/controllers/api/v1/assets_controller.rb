@@ -31,10 +31,13 @@ class Api::V1::AssetsController < ApplicationController
   def refresh
     @asset = Asset.where(user_id: params[:user_id]).each do |asset|
       yfinance = YfinanceService.new(asset.ticker)
-      queried_price = yfinance.get_bid_price # Money object
+      queried_price = yfinance.get_current_price # Money object
+
       currency_exchanger = CurrencyExchangeService.new(queried_price.currency)
       new_asset_price = currency_exchanger.convert_to(queried_price.amount, asset.currency)
-      asset.update(price: new_asset_price)
+      puts asset.ticker
+      puts new_asset_price
+      asset.update(price: new_asset_price > 0 ? new_asset_price : asset.price)
     end
     render json: { mesage: 'Attempted to refresh!' }
   end
