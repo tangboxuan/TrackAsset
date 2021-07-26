@@ -33,7 +33,7 @@ class YfinanceService < ApplicationService
   end
 
   private def get_bid_or_ask(key_phrase)
-    return -1 if @html.response.to_s.include?(ERROR_CODE)
+    return 0 if @html.response.to_s.include?(ERROR_CODE)
 
     get_json_str
     start_index = @json_str.index(key_phrase) + key_phrase.length
