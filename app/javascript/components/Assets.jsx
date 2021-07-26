@@ -183,6 +183,7 @@ class Assets extends React.Component {
               name="market"
               id="assetMarket"
               defaultValue={asset.market}
+              class="form-control"
               required
               onChange={this.onChange}
           /></td>
@@ -191,6 +192,7 @@ class Assets extends React.Component {
               size="4"
               name="ticker"
               id="assetTicker"
+              class="form-control"
               defaultValue={asset.ticker}
               required
               onChange={this.onChange}
@@ -200,6 +202,7 @@ class Assets extends React.Component {
               size="4"
               name="currency"
               id="assetCurrency"
+              class="form-control"
               defaultValue={asset.currency}
               required
               onChange={this.onChange}
@@ -208,6 +211,7 @@ class Assets extends React.Component {
               type="number"
               name="volume"
               id="assetVolume"
+              class="form-control"
               defaultValue={asset.volume}
               required
               onChange={this.onChange}
@@ -216,6 +220,7 @@ class Assets extends React.Component {
               type="number"
               name="cost"
               id="assetCost"
+              class="form-control"
               defaultValue={asset.cost}
               required
               onChange={this.onChange}
@@ -224,6 +229,7 @@ class Assets extends React.Component {
               type="number"
               name="price"
               id="assetPrice"
+              class="form-control"
               defaultValue={asset.price}
               required
               onChange={this.onChange}
@@ -232,8 +238,8 @@ class Assets extends React.Component {
             {asset.updated_at}
           </td>
           <td colSpan="2">
-              <button type="submit">
-              Confirm Edit
+              <button class="btn btn-primary" type="submit">
+                Confirm Edit
               </button>
           </td>   
           </tr>
